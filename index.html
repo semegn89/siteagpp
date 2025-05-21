@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentAPP | Международные платежи и денежные переводы</title>
+  <meta name="description" content="AgentAPP — ваш надёжный платёжный агент для международных переводов с комиссией от 0.5%. Быстрые, безопасные платежи в 100+ стран мира.">
+  <meta name="keywords" content="международные переводы, денежные переводы, валютные операции, платежный агент, быстрые переводы">
+  <meta name="author" content="AgentAPP">
+  <meta property="og:title" content="AgentAPP - Международные платежи и переводы">
+  <meta property="og:description" content="Быстрые и безопасные международные переводы с минимальными комиссиями">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://agentapp.com">
+  <meta property="og:image" content="https://agentapp.com/images/og-image.jpg">
+  <meta property="og:site_name" content="AgentAPP">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Preload critical resources -->
+  <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/style.css">
+  <script type="module" src="scripts/main.js"></script>
+  <link rel="manifest" href="/public/site.webmanifest">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles/style.css">
+  
+  <!-- Cabinet CSS (disabled by default) -->
+  <link rel="stylesheet" href="styles/cabinet.css" id="cabinetCss" disabled>
+  <style>
+    /* скрыть лендинг, когда на <body> стоит класс .logged-in */
+    body.logged-in .landing-section,
+    body.logged-in .hero,
+    body.logged-in header.header {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Language Switcher -->
+  <div class="lang-switcher">
+    <button class="lang-btn active" id="ruBtn" aria-label="Русский язык">RU</button>
+    <button class="lang-btn" id="enBtn" aria-label="English language">EN</button>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button id="toggleDarkMode" class="theme-toggle" aria-label="Переключить тему">
+    <i class="fas fa-moon"></i>
+  </button>
+  
+  <!-- Header -->
+  <header id="siteHeader" class="header" role="navigation" aria-label="Главное меню">
+    <div class="container">
+      <!-- Logo -->
+      <a href="#home" class="logo" aria-label="AgentAPP - На главную">
+        <img src="images/logo.svg" alt="AgentAPP" width="160" height="48" loading="eager">
+      </a>
+  
+      <!-- Desktop Navigation -->
+      <nav class="nav-menu" id="desktopNav" aria-label="Основное меню">
+        <a href="#home" class="nav-item active" data-i18n="nav.home">Главная</a>
+        <a href="#about" class="nav-item" data-i18n="nav.about">О нас</a>
+        <a href="#services" class="nav-item" data-i18n="nav.services">Услуги</a>
+        <a href="#advantages" class="nav-item" data-i18n="nav.advantages">Преимущества</a>
+        <a href="#testimonials" class="nav-item" data-i18n="nav.testimonials">Отзывы</a>
+        <a href="#faq" class="nav-item" data-i18n="nav.faq">FAQ</a>
+        <a href="#contact" class="nav-item" data-i18n="nav.contact">Контакты</a>
+  
+        <!-- Auth Links -->
+        <a href="#" id="loginBtn" class="nav-item auth-link" data-modal="loginModal" data-i18n="nav.login">Войти</a>
+        <a href="#" id="registerBtn" class="nav-item auth-link" data-modal="registerModal" data-i18n="nav.register">Регистрация</a>
+        <a href="#" id="logoutBtn" class="nav-item auth-link" style="display:none;" data-i18n="nav.logout">Выход</a>
+      </nav>
+  
+      <!-- CTA Button -->
+      <a href="#contact" class="btn btn-primary nav-cta" data-i18n="nav.start">Начать перевод</a>
+  
+      <!-- Mobile Menu Toggle -->
+      <button id="hamburgerBtn" class="burger" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  
+    <!-- Mobile Navigation -->
+    <nav class="nav-menu mobile-menu" id="mobileNav" aria-label="Мобильное меню" hidden>
+      <a href="#home" class="nav-item active" data-i18n="nav.home">Главная</a>
+      <a href="#about" class="nav-item" data-i18n="nav.about">О нас</a>
+      <a href="#services" class="nav-item" data-i18n="nav.services">Услуги</a>
+      <a href="#advantages" class="nav-item" data-i18n="nav.advantages">Преимущества</a>
+      <a href="#testimonials" class="nav-item" data-i18n="nav.testimonials">Отзывы</a>
+      <a href="#faq" class="nav-item" data-i18n="nav.faq">FAQ</a>
+      <a href="#contact" class="nav-item" data-i18n="nav.contact">Контакты</a>
+  
+      <!-- Mobile Auth Links -->
+      <a href="#" id="loginBtnMobile" class="nav-item auth-link" data-modal="loginModal" data-i18n="nav.login">Войти</a>
+      <a href="#" id="registerBtnMobile" class="nav-item auth-link" data-modal="registerModal" data-i18n="nav.register">Регистрация</a>
+      <a href="#" id="logoutBtnMobile" class="nav-item auth-link" style="display:none;" data-i18n="nav.logout">Выход</a>
+    </nav>
+  </header>
+
+ <!-- Cabinet Content (hidden by default) -->
+<main id="content" style="display:none;">
+    <div class="main-layout">
+        <aside class="sidebar">
+                 <div class="icon active" data-page="userCabinet">
+                   <div class="icon-img"><i class="fas fa-home"></i></div>
+                   <span data-i18n="cabinet.dashboard">Главная</span>
+                 </div>
+                 <div class="icon" data-page="payments">
+                   <div class="icon-img"><i class="fas fa-exchange-alt"></i></div>
+                   <span data-i18n="cabinet.payments">Платежи</span>
+                 </div>
+                 <div class="icon" data-page="stats">
+                   <div class="icon-img"><i class="fas fa-chart-bar"></i></div>
+                   <span data-i18n="cabinet.stats">Статистика</span>
+                 </div>
+                 <div class="icon" data-page="documents">
+                   <div class="icon-img"><i class="fas fa-file-alt"></i></div>
+                   <span data-i18n="cabinet.documents">Документы</span>
+                 </div>
+                 <div class="icon" data-page="rates">
+                   <div class="icon-img"><i class="fas fa-percentage"></i></div>
+                   <span data-i18n="cabinet.rates">Тарифы</span>
+                 </div>
+                 <div class="icon" data-page="templates">
+                   <div class="icon-img"><i class="fas fa-copy"></i></div>
+                   <span data-i18n="cabinet.templates">Шаблоны</span>
+                 </div>
+                 <div class="icon" data-page="adminPanel">
+                   <div class="icon-img"><i class="fas fa-tools"></i></div>
+                   <span data-i18n="cabinet.admin">Админка</span>
+                 </div>
+                 <div class="icon logout" id="logoutSidebar">
+                    <div class="icon-img"><i class="fas fa-sign-out-alt"></i></div>
+                    <span data-i18n="nav.logout">Выход</span>
+                  </div>
+
+               </aside>
+    
+        <!-- Контейнер, в который рендерятся страницы кабинета -->
+        <div class="details"><!-- NEW -->
+          <!-- сюда динамически вставляется содержимое payments / stats / … -->
+        </div>
+      </div><!-- /#content -->
+    </main>  
+  <!-- Landing Page Sections -->
+  <!-- Hero Section -->
+  <section class="hero landing-section" id="home" aria-label="Главный экран">
+    <div class="hero-content">
+      <h1 data-i18n="hero.title">Международные переводы быстро и безопасно</h1>
+      <p data-i18n="hero.subtitle">
+        AgentAPP — ваш надёжный платёжный агент в любой точке мира с комиссией от 0.5%
+      </p>
+      
+
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">Начать перевод</a>
+        <a href="#about" class="btn btn-secondary" data-i18n="hero.learn">Узнать больше</a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <span data-i18n="hero.scroll">Листайте вниз</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about landing-section" id="about" aria-label="О компании">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h2 class="section-title" data-i18n="about.title">О компании AgentAPP</h2>
+          <p data-i18n="about.content">
+            Мы специализируемся на международных денежных переводах и платежах, предлагая клиентам быстрые,
+            безопасные и выгодные условия для финансовых операций по всему миру.
+          </p>
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-globe"></i></div>
+              <div>
+                <h3 data-i18n="about.global">Глобальное покрытие</h3>
+                <p data-i18n="about.global_desc">Переводы в 100+ стран мира</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-lock"></i></div>
+              <div>
+                <h3 data-i18n="about.security">Безопасность</h3>
+                <p data-i18n="about.security_desc">Защита всех транзакций</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-clock"></i></div>
+              <div>
+                <h3 data-i18n="about.speed">Скорость</h3>
+                <p data-i18n="about.speed_desc">Переводы за 1-3 рабочих дня</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-percentage"></i></div>
+              <div>
+                <h3 data-i18n="about.commission">Низкие комиссии</h3>
+                <p data-i18n="about.commission_desc">От 0.5% за перевод</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-img-container">
+          <img src="images/about.webp" alt="О компании AgentAPP" class="lazy about-img" width="600" height="400" loading="lazy">
+        </div>
+      </div>
+      <div class="stats-numbers">
+        <div class="stat-box">
+          <h3><span class="counter" data-count="100000">0</span>+</h3>
+          <p data-i18n="stats.clients">Довольных клиентов</p>
+        </div>
+        <div class="stat-box">
+          <h3><span class="counter" data-count="100">0</span>+</h3>
+          <p data-i18n="stats.countries">Стран для переводов</p>
+        </div>
+        <div class="stat-box">
+          <h3><span class="counter" data-count="5">0</span>+</h3>
+          <p data-i18n="stats.years">Лет на рынке</p>
+        </div>
+        <div class="stat-box">
+          <h3><span class="counter" data-count="24">0</span>/7</h3>
+          <p data-i18n="stats.support">Поддержка клиентов</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services landing-section" id="services" aria-label="Наши услуги">
+    <div class="container">
+      <h2 class="section-title" data-i18n="services.title">Наши услуги</h2>
+      <p class="section-subtitle" data-i18n="services.subtitle">
+        Полный спектр услуг для международных переводов
+      </p>
+      <div class="services-container">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-exchange-alt"></i></div>
+          <h3 data-i18n="services.transfers">Международные переводы</h3>
+          <p data-i18n="services.transfers_desc">
+            Быстрые и безопасные переводы в любую точку мира с минимальными комиссиями и выгодными курсами.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-briefcase"></i></div>
+          <h3 data-i18n="services.business">Бизнес-платежи</h3>
+          <p data-i18n="services.business_desc">
+            Оптимизация международных расчетов для бизнеса с индивидуальными тарифами.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-hand-holding-usd"></i></div>
+          <h3 data-i18n="services.payment">Платёжное сопровождение</h3>
+          <p data-i18n="services.payment_desc">
+            Полное сопровождение сделок и контроль исполнения платежных обязательств.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+          <h3 data-i18n="services.currency">Валютные операции</h3>
+          <p data-i18n="services.currency_desc">
+            Конвертация валют по выгодным курсам с защитой от колебаний.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-headset"></i></div>
+          <h3 data-i18n="services.consulting">Финансовые консультации</h3>
+          <p data-i18n="services.consulting_desc">
+            Профессиональные консультации по международным платежам и переводам.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3 data-i18n="services.mobile">Мобильные платежи</h3>
+          <p data-i18n="services.mobile_desc">
+            Удобные переводы с мобильного телефона в любую точку мира.
+          </p>
+          <a href="#" class="service-link" data-i18n="services.learn_more">
+            Подробнее <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advantages Section -->
+  <section class="advantages landing-section" id="advantages" aria-label="Наши преимущества">
+    <div class="container">
+      <h2 class="section-title" data-i18n="advantages.title">Наши преимущества</h2>
+      <p class="section-subtitle" data-i18n="advantages.subtitle">
+        Почему клиенты выбирают AgentAPP
+      </p>
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-percentage"></i></div>
+          <h3 data-i18n="advantages.low">Низкие комиссии</h3>
+          <p data-i18n="advantages.low_desc">Комиссия от 0.5% за международные переводы</p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3 data-i18n="advantages.secure">Безопасность</h3>
+          <p data-i18n="advantages.secure_desc">SSL-шифрование и двухфакторная аутентификация</p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-tachometer-alt"></i></div>
+          <h3 data-i18n="advantages.fast">Скорость</h3>
+          <p data-i18n="advantages.fast_desc">90% переводов выполняются в течение 24 часов</p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-globe-europe"></i></div>
+          <h3 data-i18n="advantages.coverage">Покрытие</h3>
+          <p data-i18n="advantages.coverage_desc">Работаем с 100+ странами по всему миру</p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-user-tie"></i></div>
+          <h3 data-i18n="advantages.support">Поддержка</h3>
+          <p data-i18n="advantages.support_desc">Персональный менеджер для каждого клиента</p>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon"><i class="fas fa-chart-line"></i></div>
+          <h3 data-i18n="advantages.rates">Выгодные курсы</h3>
+          <p data-i18n="advantages.rates_desc">Курсы обмена лучше, чем в банках</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials landing-section" id="testimonials" aria-label="Отзывы клиентов">
+    <div class="container">
+      <h2 class="section-title" data-i18n="testimonials.title">Отзывы клиентов</h2>
+      <p class="section-subtitle" data-i18n="testimonials.subtitle">
+        Что говорят о нас наши клиенты
+      </p>
+      <div class="testimonial-list">
+        <div class="testimonial-card">
+          <div class="testimonial-text" data-i18n="testimonials.1.text">
+            "Пользуюсь услугами AgentAPP уже более года. Надёжно, быстро и удобно! Особенно нравится мобильное приложение и низкие комиссии."
+          </div>
+          <div class="client-info">
+            <img src="images/client1.webp" alt="Клиент" class="lazy client-avatar" width="60" height="60" loading="lazy">
+            <div class="client-details">
+              <h4 data-i18n="testimonials.1.name">Мария Петрова</h4>
+              <p data-i18n="testimonials.1.position">Частный клиент</p>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text" data-i18n="testimonials.2.text">
+            "Как владелец бизнеса с международными поставщиками, ценю скорость и надежность переводов. AgentAPP значительно упростил нашу финансовую работу."
+          </div>
+          <div class="client-info">
+            <img src="images/client2.webp" alt="Клиент" class="lazy client-avatar" width="60" height="60" loading="lazy">
+            <div class="client-details">
+              <h4 data-i18n="testimonials.2.name">Алексей Смирнов</h4>
+              <p data-i18n="testimonials.2.position">Директор ООО "ТехноИмпорт"</p>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text" data-i18n="testimonials.3.text">
+            "Отправляю деньги родственникам за границу регулярно. С AgentAPP это стало быстрее и дешевле на 30% по сравнению с банковскими переводами."
+          </div>
+          <div class="client-info">
+            <img src="images/client3.webp" alt="Клиент" class="lazy client-avatar" width="60" height="60" loading="lazy">
+            <div class="client-details">
+              <h4 data-i18n="testimonials.3.name">Ольга Иванова</h4>
+              <p data-i18n="testimonials.3.position">Частный клиент</p>
+              <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="module" src="/public/scripts/transferCalc.js"></script>
+
+  <!-- FAQ Section -->
+  <section class="faq landing-section" id="faq" aria-label="Часто задаваемые вопросы">
+    <div class="container">
+      <h2 class="section-title" data-i18n="faq.title">Часто задаваемые вопросы</h2>
+      <p class="section-subtitle" data-i18n="faq.subtitle">
+        Ответы на популярные вопросы о наших услугах
+      </p>
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span data-i18n="faq.1.question">Как быстро проходят переводы?</span>
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p data-i18n="faq.1.answer">
+              Большинство международных переводов зачисляется в течение 1–3 рабочих дней.
+              В некоторых случаях переводы могут осуществляться быстрее — в течение нескольких часов.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span data-i18n="faq.2.question">Какие документы нужны для регистрации?</span>
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p data-i18n="faq.2.answer">
+              Для физических лиц: паспорт. Для юридических лиц: учредительные документы компании,
+              документы, подтверждающие полномочия представителя, и информация о бенефициарах.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span data-i18n="faq.3.question">Какова минимальная и максимальная сумма перевода?</span>
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p data-i18n="faq.3.answer">
+              Минимальная сумма перевода — 10 USD или эквивалент в другой валюте.
+              Максимальная сумма зависит от типа вашего аккаунта и может достигать 1 000 000 USD в месяц.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span data-i18n="faq.4.question">Какие валюты доступны для переводов?</span>
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p data-i18n="faq.4.answer">
+              Основные валюты: USD, EUR, GBP, CHF, JPY, CNY, а также все валюты стран СНГ.
+              Полный список доступных валют вы можете уточнить у своего менеджера.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span data-i18n="faq.5.question">Как обеспечивается безопасность переводов?</span>
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p data-i18n="faq.5.answer">
+              Мы используем банковские технологии шифрования, двухфакторную аутентификацию
+              и соблюдаем все требования международного финансового законодательства.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>  
+<!-- =========================================
+     Блок “Связаться / Рассчитать”
+========================================== -->
+<section id="contact" class="dual-box landing-section">
+  <div class="container dual-box__wrap">
+    <!-- Левая колонка — Калькулятор -->
+    <div class="dual-box__left">
+      <h2 class="section-title">Денежный перевод</h2>
+      <p class="section-subtitle">
+        Рассчитайте сумму и комиссию за несколько секунд
+      </p>
+
+      <form class="transfer__form card" id="transferForm">
+        <!-- Валюта / Страна -->
+        <div class="transfer__row">
+          <div class="transfer__select transfer__valute">
+            <label>Валюта</label>
+            <p>USD</p>
+            <ul class="transfer__valute-list"></ul>
+          </div>
+
+          <div class="transfer__select transfer__country">
+            <label>Страна получателя</label>
+            <p>Russian Federation</p>
+            <ul class="transfer__country-list"></ul>
+          </div>
+        </div>
+
+        <!-- Сумма -->
+        <div class="transfer__row">
+          <label for="summa">Сумма</label>
+          <div class="transfer__sum-wrapper">
+            <input id="summa" type="text" inputmode="numeric" placeholder="0">
+            <span class="currency-label">USD</span>
+          </div>
+        </div>
+
+        <!-- Имя / Телефон -->
+        <div class="transfer__row">
+          <label for="transfer__name">Как к вам обращаться?</label>
+          <input id="transfer__name" type="text" placeholder="Имя">
+          <small id="error-message" class="error-msg"
+                 style="display:none">Нецензурная лексика не допускается</small>
+        </div>
+
+        <div class="transfer__row">
+          <label for="transfer__phone">Телефон</label>
+          <input id="transfer__phone" type="tel" placeholder="+7 (___) ___-__-__">
+        </div>
+
+        <!-- Чекбоксы -->
+        <div class="checkbox" id="transfer-marketing">
+          <label><input type="checkbox"> Согласен получать полезные материалы</label>
+        </div>
+
+        <div class="checkbox transfer__itog">
+          <label><input type="checkbox" id="policyCheckbox">
+            Соглашаюсь с обработкой персональных данных</label>
+        </div>
+
+        <!-- Итог -->
+        <div class="transfer__price">
+          <div class="transfer__price-kom">Комиссия: <p>0 ₽</p></div>
+          <div class="transfer__price-all">Итог к оплате: <p>0 ₽</p></div>
+        </div>
+
+        <button class="button btn-primary transfer__btn-main" type="submit">
+          Оставить заявку
+        </button>
+      </form>
+    </div><!-- /.dual-box__left -->
+
+    <!-- Правая колонка — Форма обратной связи -->
+    <div class="dual-box__right">
+      <h2 class="section-title" data-i18n="contact.title">Готовы начать?</h2>
+      <p class="section-subtitle" data-i18n="contact.subtitle">
+        Свяжитесь с нами для получения дополнительной информации
+      </p>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-details">
+            <h3 data-i18n="contact.address_title">Наш офис</h3>
+            <p data-i18n="contact.address">ул. Примерная, 123, Москва, Россия</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="contact-details">
+            <h3 data-i18n="contact.phone_title">Телефон</h3>
+            <a href="tel:+74951234567" data-i18n="contact.phone">+7 (495) 123-45-67</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-details">
+            <h3 data-i18n="contact.email_title">Email</h3>
+            <a href="mailto:info@agentapp.com"
+               data-i18n="contact.email">info@agentapp.com</a>
+          </div>
+        </div>
+      </div><!-- /.contact-info -->
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="name" data-i18n="form.name">Ваше имя</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email" data-i18n="form.email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone" data-i18n="form.phone">Телефон</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="service" data-i18n="form.service">Интересующая услуга</label>
+          <select id="service" name="service">
+            <option value="" data-i18n="form.select_default">Выберите услугу</option>
+            <option value="transfers" data-i18n="services.transfers">Международные переводы</option>
+            <option value="business"  data-i18n="services.business">Бизнес-платежи</option>
+            <!-- … остальное без изменений … -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message" data-i18n="form.message">Ваше сообщение</label>
+          <textarea id="message" name="message"></textarea>
+        </div>
+        <button type="submit" class="form-submit" data-i18n="form.submit">
+          <span data-i18n="form.submit_text">Отправить сообщение</span>
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div><!-- /.dual-box__right -->
+  </div><!-- /.dual-box__wrap -->
+</section>
+
+<!-- Глобальный thank-you modal (один на страницу) -->
+<div class="modal thx" id="thankYouModal"><div class="modal-content">
+  <button class="modal-close" aria-label="Закрыть">&times;</button>
+  <h3>Спасибо!</h3>
+  <p>Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.</p>
+</div></div>
+
+    <!-- Footer -->
+    <footer class="footer" aria-label="Подвал сайта">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-about">
+              <img src="images/logo-white.svg" alt="AgentAPP" class="footer-logo" width="160" height="48" loading="lazy">
+              <p data-i18n="footer.about">
+                AgentAPP — современный сервис международных денежных переводов с минимальными комиссиями
+                и выгодными курсами валют.
+              </p>
+              <div class="social-links">
+                <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+    
+            <div class="footer-links">
+              <h3 class="footer-heading" data-i18n="footer.links_title">Ссылки</h3>
+              <div class="footer-links">
+                <a href="#home" class="footer-link" data-i18n="nav.home">Главная</a>
+                <a href="#about" class="footer-link" data-i18n="nav.about">О нас</a>
+                <a href="#services" class="footer-link" data-i18n="nav.services">Услуги</a>
+                <a href="#advantages" class="footer-link" data-i18n="nav.advantages">Преимущества</a>
+                <a href="#testimonials" class="footer-link" data-i18n="nav.testimonials">Отзывы</a>
+                <a href="#faq" class="footer-link" data-i18n="nav.faq">FAQ</a>
+                <a href="#contact" class="footer-link" data-i18n="nav.contact">Контакты</a>
+              </div>
+            </div>
+    
+            <div class="footer-services">
+              <h3 class="footer-heading" data-i18n="footer.services_title">Услуги</h3>
+              <div class="footer-links">
+                <a href="#" class="footer-link" data-i18n="services.transfers">Международные переводы</a>
+                <a href="#" class="footer-link" data-i18n="services.business">Бизнес-платежи</a>
+                <a href="#" class="footer-link" data-i18n="services.payment">Платёжное сопровождение</a>
+                <a href="#" class="footer-link" data-i18n="services.currency">Валютные операции</a>
+                <a href="#" class="footer-link" data-i18n="services.consulting">Финансовые консультации</a>
+                <a href="#" class="footer-link" data-i18n="services.mobile">Мобильные платежи</a>
+              </div>
+            </div>
+    
+            <div class="footer-contact">
+              <h3 class="footer-heading" data-i18n="footer.contact_title">Контакты</h3>
+              <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="contact.address">ул. Примерная, 123, Москва, Россия</span></p>
+              <p><i class="fas fa-phone-alt"></i> <a href="tel:+74951234567" data-i18n="contact.phone">+7 (495) 123-45-67</a></p>
+              <p><i class="fas fa-envelope"></i> <a href="mailto:info@agentapp.com" data-i18n="contact.email">info@agentapp.com</a></p>
+              <p><i class="fas fa-clock"></i> <span data-i18n="contact.hours">Пн-Пт: 9:00-18:00</span></p>
+            </div>
+          </div>
+    
+          <div class="footer-bottom">
+            <p class="copyright" data-i18n="footer.copyright">
+              &copy; 2023 AgentAPP. Все права защищены.
+            </p>
+          </div>
+        </div>
+      </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Наверх">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" hidden>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2 id="loginModalTitle" data-i18n="modal.login_title">Вход в личный кабинет</h2>
+      <form id="loginForm">
+        <div class="form-row">
+          <label for="modalEmail" data-i18n="form.email">Email:</label>
+          <input type="email" id="modalEmail" name="modalEmail" required>
+        </div>
+        <div class="form-row">
+          <label for="modalPassword" data-i18n="form.password">Пароль:</label>
+          <input type="password" id="modalPassword" name="modalPassword" required>
+        </div>
+        <div class="form-row">
+          <a href="#" class="forgot-password" data-i18n="modal.forgot">Забыли пароль?</a>
+        </div>
+        <button type="submit" class="button" data-i18n="modal.login">Войти</button>
+        <div class="auth-divider">
+          <span data-i18n="modal.or">или</span>
+        </div>
+        <button type="button" class="button secondary" data-i18n="modal.register" id="switchToRegister">
+          Зарегистрироваться
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="registerModalTitle" hidden>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Закрыть">&times;</button>
+      <h2 id="registerModalTitle" data-i18n="modal.register_title">Регистрация</h2>
+      <form id="registerForm">
+        <div class="form-row">
+          <label for="rEmail" data-i18n="form.email">Email:</label>
+          <input type="email" id="rEmail" name="rEmail" required>
+        </div>
+        <div class="form-row">
+          <label for="rPassword" data-i18n="form.password">Пароль:</label>
+          <input type="password" id="rPassword" name="rPassword" required>
+        </div>
+        <div class="form-row">
+          <label for="rPassword2" data-i18n="form.repeat_password">Повтор пароля:</label>
+          <input type="password" id="rPassword2" name="rPassword2" required>
+        </div>
+        
+        <h3 class="form-section-title" data-i18n="modal.company_info">Информация о компании</h3>
+        
+        <div class="form-row">
+          <label for="companyName" data-i18n="form.company_name">Название компании:</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <div class="form-row">
+          <label for="inn" data-i18n="form.inn">ИНН:</label>
+          <input type="text" id="inn" name="inn" required>
+        </div>
+        <div class="form-row">
+          <label for="address" data-i18n="form.address">Юридический адрес:</label>
+          <input type="text" id="address" name="address" required>
+        </div>
+        
+        <h3 class="form-section-title" data-i18n="modal.bank_info">Банковские реквизиты</h3>
+        
+        <div class="form-row">
+          <label for="bankName" data-i18n="form.bank_name">Название банка:</label>
+          <input type="text" id="bankName" name="bankName" required>
+        </div>
+        <div class="form-row">
+          <label for="bik" data-i18n="form.bik">БИК:</label>
+          <input type="text" id="bik" name="bik" required>
+        </div>
+        <div class="form-row">
+          <label for="accountNumber" data-i18n="form.account">Расчётный счёт:</label>
+          <input type="text" id="accountNumber" name="accountNumber" required>
+        </div>
+        
+        <div class="form-row">
+          <label for="phone" data-i18n="form.phone">Контактный телефон:</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        
+        <div class="form-row checkbox-row">
+          <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+          <label for="agreeTerms" data-i18n="modal.agree_terms">
+            Я согласен с <a href="#" data-i18n="modal.terms">условиями обслуживания</a> и 
+            <a href="#" data-i18n="modal.privacy">политикой конфиденциальности</a>
+          </label>
+        </div>
+        
+        <button type="submit" class="button" data-i18n="modal.register">Зарегистрироваться</button>
+        
+        <div class="auth-divider">
+          <span data-i18n="modal.or">или</span>
+        </div>
+        
+        <button type="button" class="button secondary" data-i18n="modal.login" id="switchToLogin">
+          Уже есть аккаунт? Войти
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toastContainer" aria-live="polite"></div>
+
+  <!-- Preview Modal -->
+  <div id="previewModal" class="modal" role="dialog" aria-modal="true" hidden>
+    <div class="modal-content" id="previewContent"></div>
+  </div>
+
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Main Script -->
+  <script type="module" src="/public/scripts/main.js"></script></body>
+</html>
