@@ -1,0 +1,626 @@
+/* ==============================
+   1) Базовые переменные и reset
+   ============================== */
+   :root {
+    --primary: #2563EB;
+    --primary-dark: #1E40AF;
+    --primary-light: #EFF6FF;
+    --accent: #F59E0B;
+    --accent-dark: #D97706;
+    --light-bg: #F8FAFC;
+    --light: #FFFFFF;
+    --dark-text: #1F2937;
+    --gray-text: #6B7280;
+    --border: #E5E7EB;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  .rtl {
+    direction: rtl;
+  }
+  
+  /* ==============================
+     2) Preloader
+     ============================== */
+  .preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+  }
+  
+  .preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* ==============================
+     3) Шапка (Header)
+     ============================== */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff; /* Можно заменить на rgba(255,255,255,0.1) + backdrop-filter, если нужна прозрачная */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 1rem 5%;
+    transition: all 0.3s ease;
+  }
+  
+  .header.scrolled {
+    /* Можно сделать чуть плотнее цвет */
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .logo {
+    width: 160px;
+    height: auto;
+    transition: var(--transition);
+  }
+  .logo:hover {
+    opacity: 0.9;
+  }
+  
+  /* Навигационное меню (десктоп) */
+  .nav-menu {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  /* Кнопка бургер (мобильное меню) */
+  .burger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0.5rem;
+  }
+  .burger div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark-text);
+    margin: 4px 0;
+    transition: var(--transition);
+  }
+  .burger.active div:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .burger.active div:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.active div:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  
+  /* ==============================
+     4) Ссылки в шапке
+     ============================== */
+  .nav-item {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    position: relative;
+  }
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+  }
+  .nav-item:hover {
+    color: var(--primary);
+  }
+  .nav-item:hover::after {
+    width: 100%;
+  }
+  .nav-item.active {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .nav-item.active::after {
+    width: 100%;
+  }
+  
+  /* ==============================
+     5) Мобильное меню
+     ============================== */
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    /* остальные стили */
+  }
+  .mobile-menu.active {
+    display: flex;
+  }
+  
+  /* В desktop-версии прячем мобильное меню */
+  @media (min-width: 769px) {
+    .mobile-menu { display: none !important; }
+  }
+  
+  /* В мобильной версии прячем .nav-menu (десктоп) */
+  @media (max-width: 768px) {
+    .nav-menu {
+      display: none !important;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--light);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+    }
+    .nav-menu.active {
+      right: 0;
+    }
+    .burger {
+      display: flex;
+    }
+  }
+  
+  /* ==============================
+     6) Главный контент (Hero, sections)
+     ============================== */
+  section {
+    padding: 6rem 5%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+    position: relative;
+    display: inline-block;
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; left: 0;
+    width: 60px; height: 4px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  .section-subtitle {
+    font-size: 1.25rem;
+    color: var(--gray-text);
+    margin-bottom: 3rem;
+    max-width: 700px;
+  }
+  /* Hero */
+  .hero {
+    height: 100vh;
+    min-height: 700px;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('../images/guangzhou.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 100px;
+    background: linear-gradient(transparent, var(--light-bg));
+    z-index: 1;
+  }
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    padding: 0 2rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
+    color: var(--light);
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: 2.5rem;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--light);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-secondary {
+    background: var(--light);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-secondary:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-icon {
+    margin-left: 0.5rem;
+    transition: var(--transition);
+  }
+  .btn:hover .btn-icon {
+    transform: translateX(3px);
+  }
+  
+  /* ==============================
+     7) Модалки (login/register)
+     ============================== */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  .modal.show {
+    display: flex;
+  }
+  .modal-content {
+    background: var(--light);
+    border-radius: var(--radius-md);
+    max-width: 400px;
+    width: 90%;
+    padding: 2rem;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal-close {
+    position: absolute;
+    top: 0.5rem; right: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  /* ==============================
+     8) Секции About, Services, Advantages, Testimonials, FAQ, Contact
+     (вы уже их описали, просто оставьте как есть — ниже кратко)
+     ============================== */
+  /* ... About ... */
+  .about {
+    background-color: var(--light);
+    position: relative;
+  }
+  .about::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(var(--light-bg), transparent);
+    z-index: 1;
+  }
+  /* ... и т.д. ... */
+  
+  /* ==============================
+     9) Footer
+     ============================== */
+  /* ... стили футера ... */
+  
+  /* ==============================
+     10) Кнопка "Наверх" (back-to-top)
+     ============================== */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    width: 50px; height: 50px;
+    background: var(--primary);
+    color: var(--light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+    box-shadow: var(--shadow-md);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .back-to-top:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+  }
+  
+  /* ==============================
+     11) Responsive (пример)
+     ============================== */
+  @media (max-width: 992px) {
+    section {
+      padding: 5rem 5%;
+    }
+    .hero h1 {
+      font-size: 3rem;
+    }
+    .about-grid {
+      gap: 2rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 600px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    .btn {
+      width: 100%;
+      max-width: 250px;
+    }
+    .about-features {
+      grid-template-columns: 1fr;
+    }
+    .stats-numbers {
+      grid-template-columns: 1fr 1fr;
+    }
+    .contact-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 576px) {
+    section {
+      padding: 4rem 5%;
+    }
+    .section-title {
+      font-size: 2rem;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+    }
+    .hero h1 {
+      font-size: 2rem;
+    }
+    .stats-numbers {
+      grid-template-columns: 1fr;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ==============================
+     12) Интерфейс после входа (ЛК/админ)
+     ============================== */
+  
+  /* Отступ под шапкой, если нужно */
+  main#content {
+    padding-top: 62px; /* Высота шапки + небольшой запас */
+    display: none;     /* Показываем JS’ом, если user logged in */
+  }
+  
+  /* Раскладка кабинета */
+  .main-layout {
+    display: flex;
+    min-height: 100vh;
+    gap: 20px;
+    padding: 20px; /* если нужно */
+  }
+  .sidebar {
+    width: 240px;
+    background: var(--light);
+    border-radius: 12px;
+    padding: 20px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+  .sidebar .icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 8px 0;
+    text-align: center; /* если нужно */
+  }
+  .sidebar .icon:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+    transform: scale(1.05);
+  }
+  .icon-img {
+    font-size: 32px;
+    margin-bottom: 8px; /* если иконка над текстом */
+  }
+  .details {
+    flex-grow: 1;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: opacity 0.4s;
+    overflow: auto;
+  }
+  .details.fade-out {
+    opacity: 0.3;
+  }
+  
+  /* Документы, платежи и т.д. */
+  .documents-card {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+  }
+  .documents-card h3 {
+    margin-bottom: 15px;
+    color: #0074D9;
+  }
+  .documents-card .card-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #fff;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+  }
+  .documents-card .card-item:hover {
+    background: #eef6ff;
+  }
+  .payment-bubble {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  /* Формы внутри кабинета */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  input, select, textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* ==============================
+     13) Тёмный режим для кабинета
+     ============================== */
+  body.dark-mode .sidebar,
+  body.dark-mode .details,
+  body.dark-mode .payment-bubble,
+  body.dark-mode .documents-card {
+    background: #333;
+    color: #eee;
+  }
+  body.dark-mode .documents-card .card-item {
+    background: #444;
+  }
+  body.dark-mode input,
+  body.dark-mode select,
+  body.dark-mode textarea {
+    background: #555;
+    color: #fff;
+    border: 1px solid #777;
+  }
+  

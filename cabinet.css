@@ -1,0 +1,72 @@
+/****************************************************************************
+ * Кабинет / Админка — точечные правки
+ * Файл подключается ПОСЛЕ общего style.css
+ * Никакие стили лендинга здесь не трогаем.
+ ****************************************************************************/
+
+/* ===================== Контейнеры ===================== */
+.main-layout      { width: 100%; }          /* растяжка на всю ширину */
+.details          { flex: 1 1 0; min-width: 0; }
+
+/* ===================== Сайдбар ======================== */
+.sidebar{
+  width:220px; flex-shrink:0;
+  padding:24px 0;
+  display:flex; flex-direction:column; gap:14px;
+  background:linear-gradient(180deg,#42a5f5 0%,#1565c0 100%);
+  border-radius:18px 0 0 18px;
+  overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar        { width:6px; }
+.sidebar::-webkit-scrollbar-thumb  { background:#64b5f6; border-radius:3px; }
+
+.sidebar .icon{
+  display:flex; align-items:center; gap:0.75rem;
+  padding:10px 22px; font-size:14px; color:#fff;
+  border-radius:32px; cursor:pointer;
+  transition:background .25s,transform .2s;
+}
+.sidebar .icon:hover   { background:rgba(255,255,255,.18); transform:translateX(4px);}
+.sidebar .icon.active  { background:rgba(255,255,255,.28); }
+
+.sidebar .icon-img{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px; border-radius:50%;
+  background:linear-gradient(135deg,#64b5f6 0%,#1e88e5 100%);
+  box-shadow:0 2px 4px rgba(0,0,0,.35);
+  margin:0;
+}
+.sidebar .icon span    { white-space:nowrap; }
+
+/* =================== Кнопки/Select ==================== */
+.button{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;
+  padding:0.55rem 1.25rem;
+  border:none; border-radius:var(--radius-sm);
+  font-weight:600; cursor:pointer;
+  transition:var(--transition);
+  box-shadow:var(--shadow-sm); margin-right:0.75rem;
+}
+.button:hover   { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.button:active  { transform:translateY(0); }
+.button:disabled{ opacity:.6; cursor:not-allowed; }
+
+select.button{
+  background:#fff; color:var(--dark-text);
+  border:2px solid var(--primary);
+  padding:0.5rem 2.25rem 0.5rem 0.75rem;
+  border-radius:var(--radius-sm); font-weight:500;
+  appearance:none; transition:var(--transition);
+  background-image:url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 12 6' fill='%232563EB' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0L6 6L12 0H0Z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 0.75rem center;
+  background-size:12px 6px;
+}
+select.button:hover { background:var(--primary-light); }
+select.button:focus { outline:none; box-shadow:0 0 0 3px rgba(37,99,235,.2); }
+.cabinet  {display:flex; min-height:100vh;}
+.sidebar  {width:220px; flex-shrink:0;}
+.details  {flex:1; padding:2rem; overflow:auto;}
